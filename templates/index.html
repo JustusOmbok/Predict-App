@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Predictions</title>
+</head>
+<body>
+    <h1>Football Match Predictions</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Card Name</th>
+                <th>Prediction</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for home_team, away_team, card_name, card_description, prediction in predictions %}
+            <tr>
+                <td>{{ home_team }}</td>
+                <td>{{ away_team }}</td>
+                <td>{{ card_name }}</td>
+                <td>{{ prediction }}</td>
+                <td>{{ card_description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
