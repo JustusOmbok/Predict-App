@@ -4,27 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Predictions</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
-    <h1>Football Match Predictions</h1>
-    <table border="1">
+    <h1>Match Predictions</h1>
+    <table>
         <thead>
             <tr>
                 <th>Home Team</th>
                 <th>Away Team</th>
+                <th>Date/Time</th>
                 <th>Card Name</th>
                 <th>Prediction</th>
                 <th>Description</th>
+                <th>Match Link</th>
             </tr>
         </thead>
         <tbody>
-            {% for home_team, away_team, card_name, prediction, card_description in predictions %}
+            {% for prediction in predictions %}
             <tr>
-                <td>{{ home_team }}</td>
-                <td>{{ away_team }}</td>
-                <td>{{ card_name }}</td>
-                <td>{{ prediction }}</td>
-                <td>{{ card_description }}</td>
+                <td>{{ prediction.home_team }}</td>
+                <td>{{ prediction.away_team }}</td>
+                <td>{{ prediction.date_time }}</td>
+                <td>{{ prediction.card_name }}</td>
+                <td>{{ prediction.prediction }}</td>
+                <td>{{ prediction.description }}</td>
+                <td><a href="{{ prediction.link }}" target="_blank">View Match</a></td>
             </tr>
             {% endfor %}
         </tbody>
