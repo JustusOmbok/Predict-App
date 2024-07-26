@@ -20,31 +20,48 @@
 </head>
 <body>
     <h1>Match Predictions</h1>
+    <form id="match-form">
+        <label for="home_team">Home Team:</label>
+        <input type="text" id="home_team" name="home_team" required>
+        <br>
+        <label for="away_team">Away Team:</label>
+        <input type="text" id="away_team" name="away_team" required>
+        <br>
+        <button type="submit">Get Prediction</button>
+    </form>
+    <br>
     <table>
         <thead>
             <tr>
                 <th>Home Team</th>
                 <th>Away Team</th>
-                <th>Date/Time</th>
-                <th>Card Name</th>
-                <th>Prediction</th>
-                <th>Description</th>
-                <th>Match Link</th>
+                <th>Both Teams To Score</th>
             </tr>
         </thead>
-        <tbody>
-            {% for prediction in predictions %}
-            <tr>
-                <td>{{ prediction.home_team }}</td>
-                <td>{{ prediction.away_team }}</td>
-                <td>{{ prediction.date_time }}</td>
-                <td>{{ prediction.card_name }}</td>
-                <td>{{ prediction.prediction }}</td>
-                <td>{{ prediction.description }}</td>
-                <td><a href="{{ prediction.link }}" target="_blank">View Match</a></td>
-            </tr>
-            {% endfor %}
+        <tbody id="predictions-table">
+            <!-- Predictions will be inserted here -->
         </tbody>
     </table>
+    <script>
+        document.getElementById('match-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data.home_team}</td>
+                    <td>${data.away_team}</td>
+                    <td>${data.prediction}</td>
+                `;
+                document.getElementById('predictions-table').appendChild(row);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
